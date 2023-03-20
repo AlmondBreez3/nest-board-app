@@ -13,6 +13,10 @@ export class BoardsService {
     return this.boards;
   }
 
+  getBoardById(id: string): Board {
+    return this.boards.find((board) => board.id === id);
+  }
+
   //게시물 생성하기
   createBoard(createBoardDto: CreateBoardDto) {
     const { title, description } = createBoardDto;
@@ -24,6 +28,16 @@ export class BoardsService {
       status: BoardStatus.PUBLIC,
     };
     this.boards.push(board);
+    return board;
+  }
+
+  deleteBoard(id: string): void {
+    this.boards = this.boards.filter((board) => board.id !== id);
+  }
+
+  updateBoardStatus(id: string, status: BoardStatus): Board {
+    const board = this.getBoardById(id);
+    board.status = status;
     return board;
   }
 }
